@@ -1,2 +1,3 @@
-# transaction-helper-api
-API for transaction helper
+# transaction-propagator-api
+
+API of functional interface based transaction propagator
