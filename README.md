@@ -20,7 +20,11 @@ The JTA based implementation of the API is available at
 
 The project is the continuation of [transaction-helper][2]. If you want to
 use older Java versions, please check the older versions
-of [transaction-helper][2]. 
+of [transaction-helper][2].
+
+## Download
+
+The artifact is available on [maven-central][3]
 
 ## Why not annotations, interceptors or other magic?
 
@@ -63,3 +67,4 @@ code will be even more nice if you use lambda expressions.
 
 [1]: https://github.com/everit-org/transaction-propagator-jta
 [2]: https://github.com/everit-org-archive/transaction-helper
+[3]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22org.everit.transaction.propagator%22

@@ -26,7 +26,7 @@ public interface TransactionPropagator {
 
   /**
    * Support a current transaction, throw an exception if none exists. In case there is an exception
-   * in the callback, the transaction status is set to MARKED_ROLLBACK.
+   * in the callback, the transaction status is set to <code>MARKED_ROLLBACK</code>.
    *
    * @param action
    *          The action instance will be called inside.
@@ -42,7 +42,7 @@ public interface TransactionPropagator {
 
   /**
    * Support a current transaction, throw an exception if none exists. In case there is an exception
-   * in the callback, the transaction status is set to MARKED_ROLLBACK.
+   * in the callback, the transaction status is set to <code>MARKED_ROLLBACK</code>.
    *
    * @param <R>
    *          Return type.
@@ -61,7 +61,7 @@ public interface TransactionPropagator {
    *          The action instance will be called inside.
    * @throws IllegalStateException
    *           if the status of the current thread is different from
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_NO_TRANSACTION</code>.
    */
   default void never(final Runnable action) {
     never((Supplier<Void>) () -> {
@@ -80,7 +80,7 @@ public interface TransactionPropagator {
    * @return The result of the action execution.
    * @throws IllegalStateException
    *           if the status of the current thread is different from
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_NO_TRANSACTION</code>.
    */
   <R> R never(Supplier<R> action);
 
@@ -91,8 +91,7 @@ public interface TransactionPropagator {
    *          The action instance will be called inside.
    * @throws IllegalStateException
    *           if the transaction status at the time of calling this function is neither
-   *           {@link javax.transaction.Status#STATUS_ACTIVE} nor
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_ACTIVE</code> nor <code>STATUS_NO_TRANSACTION</code>.
    */
   default void notSupported(final Runnable action) {
     notSupported((Supplier<Void>) () -> {
@@ -111,8 +110,7 @@ public interface TransactionPropagator {
    * @return The result of the action execution.
    * @throws IllegalStateException
    *           if the transaction status at the time of calling this function is neither
-   *           {@link javax.transaction.Status#STATUS_ACTIVE} nor
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_ACTIVE</code> nor <code>STATUS_NO_TRANSACTION</code>.
    */
   <R> R notSupported(Supplier<R> action);
 
@@ -126,8 +124,7 @@ public interface TransactionPropagator {
    *          The action instance will be called inside.
    * @throws IllegalStateException
    *           if the transaction status at the time of calling this function is neither
-   *           {@link javax.transaction.Status#STATUS_ACTIVE} nor
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_ACTIVE</code> nor <code>STATUS_NO_TRANSACTION</code>.
    */
   default void required(final Runnable action) {
     required((Supplier<Void>) () -> {
@@ -149,8 +146,7 @@ public interface TransactionPropagator {
    * @return The result of the action execution.
    * @throws IllegalStateException
    *           if the transaction status at the time of calling this function is neither
-   *           {@link javax.transaction.Status#STATUS_ACTIVE} nor
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_ACTIVE</code> nor <code>STATUS_NO_TRANSACTION</code>.
    */
   <R> R required(Supplier<R> action);
 
@@ -189,8 +185,7 @@ public interface TransactionPropagator {
    *          The action instance will be called inside.
    * @throws IllegalStateException
    *           if the transaction status at the time of calling this function is neither
-   *           {@link javax.transaction.Status#STATUS_ACTIVE} nor
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_ACTIVE</code> nor <code>STATUS_NO_TRANSACTION</code>.
    */
   default void supports(final Runnable action) {
     supports((Supplier<Void>) () -> {
@@ -211,8 +206,7 @@ public interface TransactionPropagator {
    * @return The result of the action execution.
    * @throws IllegalStateException
    *           if the transaction status at the time of calling this function is neither
-   *           {@link javax.transaction.Status#STATUS_ACTIVE} nor
-   *           {@link javax.transaction.Status#STATUS_NO_TRANSACTION}.
+   *           <code>STATUS_ACTIVE</code> nor <code>STATUS_NO_TRANSACTION</code>.
    */
   <R> R supports(Supplier<R> action);
 
