@@ -24,7 +24,7 @@ of [transaction-helper][2].
 
 ## Download
 
-The artifact is available on [maven-central][3]
+The artifact is available on [maven-central][3].
 
 ## Why not annotations, interceptors or other magic?
 
@@ -67,4 +67,4 @@ code will be even more nice if you use lambda expressions.
 
 [1]: https://github.com/everit-org/transaction-propagator-jta
 [2]: https://github.com/everit-org-archive/transaction-helper
-[3]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22org.everit.transaction.propagator%22
+[3]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22org.everit.transaction.propagator.api%22
