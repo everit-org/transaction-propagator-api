@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<!--
+
+    Copyright (C) 2011 Everit Kft. (http://www.everit.org)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Transaction Propagator API</title>
+<link rel="icon" type="image/ico" href="http://www.everit.org/fonts/favicon.ico">
+
+<!--    <link rel="stylesheet" type="text/css" href="common/css/base.css">-->
+<link href="http://www.everit.org/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://www.everit.org/css/docs.min.css" rel="stylesheet">
+<link href="http://www.everit.org/css/everit.css" rel="stylesheet">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push([ '_setAccount', 'UA-15041869-4' ]);
+  _gaq.push([ '_setDomainName', 'everit.org' ]);
+  _gaq.push([ '_trackPageview' ]);
+</script>
+</head>
+
+<body class="bs-docs-home" data-spy="scroll" data-target="#affix-nav">
+  <a class="sr-only" href="#content">Skip to main content</a>
+  <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse"
+          data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand">Index</a>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav">
+          <li><a href="https://github.com/everit-org/transaction-propagator-api"
+            target="_blank">Source</a></li>
+          <li><a href="http://www.everit.org/" target="_blank">Community</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://www.everit.biz" target="_blank">Enterprise</a></li>
+          <li><a href="http://everitorg.wordpress.com/" target="_blank">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="bs-docs-masthead everit-header" id="content" role="main">
+    <div class="container">
+      <span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline"> <img
+        class="logo" src="http://www.everit.org/fonts/sbz_e.svg" alt="E">
+      </span>
+      <p class="lead">Transaction Propagator API</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="col-md-10">
+
+      <div class="bs-docs-featurette cookbook">
+        <h2 id="introduction" class="bs-docs-featurette-title">Introduction</h2>
+        <p>Transaction propagator helps executing code within transactional blocks by
+          implementing functional interfaces. The propagator supports all known methods: required,
+          requiresNew, supports, never, mandatory and notSupported.</p>
+        <p>The JTA based implementation of the API is available at transaction-propagator-jta
+          project.</p>
+      </div>
+      <hr class="featurette-divider">
+
+      <div class="bs-docs-featurette cookbook">
+        <h2 id="usage_examples" class="bs-docs-featurette-title">Usage examples</h2>
+        <pre class="prettyprint">Integer result = transactionPropagator.requiresNew(() -> {
+    // Do some stuff in the new transaction
+});</pre>
+      </div>
+      <hr class="featurette-divider">
+
+      <div class="bs-docs-featurette cookbook">
+        <h2 id="history" class="bs-docs-featurette-title">History</h2>
+        <p>
+          The project is the continuation of <a
+            href="https://github.com/everit-org-archive/transaction-helper">transaction-helper</a>.
+          If you want to use older Java versions, please check the older versions of <a
+            href="https://github.com/everit-org-archive/transaction-helper">transaction-helper</a>.
+        </p>
+      </div>
+      <hr class="featurette-divider">
+
+      <div class="bs-docs-featurette cookbook">
+        <h2 id="download" class="bs-docs-featurette-title">Download</h2>
+        <p>
+          The artifact is available on <a
+            href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22org.everit.transaction.propagator.api%22">maven-central</a>.
+        </p>
+      </div>
+      <hr class="featurette-divider">
+
+      <div class="bs-docs-featurette cookbook">
+        <h2 id="why_not_annotations_interceptors_or_other_magic" class="bs-docs-featurette-title">Why
+          not annotations, interceptors or other magic?</h2>
+        <p>By using this transaction helper, the trace of the code is always clear. We used
+          Spring interceptors, Spring annotations, Aries interceptors in the past, but we decided
+          not to use such "magical" solutions anymore.</p>
+        <p>Imagine the technology uses java proxies. In that case the programmer of the class
+          cannot be sure in which way the call stack came. Did the call come from the same object
+          but via a method that was not intercepted? Did it come via a method that was intercepted?
+          As a solution, many programmers start intercepting all of the public methods of their
+          class that is a very bad behavior.</p>
+        <p>Ok. We found out that there is ASM, CGLIB, whatever... We could use them to inherit
+          from the class and with that, we can override all of the public and protected functions.
+          Problem solved. Interception is done during all function call. What about the private
+          functions?</p>
+        <p>Ok. We found out that there is Weaving. Private functions can be intercepted as well.
+          It does not matter if the system starts up really slow. It does not matter that the hash
+          of the class is not the same as it is at compile time.</p>
+        <p>What if I want to wrap a block of code inside an iteration with requiresNew
+          transaction propagation? Do we really have to create a new function for that? And even if
+          We do so, We cannot be sure that the new function is intercepted if the technology uses
+          simple Java Proxy classes.</p>
+        <p>What about the bytecode compatibility? Will version X of ASM work with version Y of
+          Java? Well, we saw it a couple of times that it did not. So we had to wait for a new
+          version of ASM to be able to use a bugfix version of Java.</p>
+        <p>And especially in the OSGi world: What makes you sure that the bundle that does the
+          weaving is started before your bundle that should be weaved?</p>
+        <p>Is it so much to ask to use an anonymous class? There will be more code, but still
+          the code will be much more clear! It will be yours. With Java 8, the code will be even
+          more nice if you use lambda expressions.</p>
+      </div>
+      <hr class="featurette-divider">
+    </div>
+
+    <!--        Affix-->
+    <div class="col-md-2 col-sm-0 col-xs-0">
+      <nav id="affix-nav">
+        <ul class="nav nav-pills nav-stacked everit-affix" data-spy="affix" data-offset-top="350"
+          data-offset-bottom="140">
+          <li class="active"><a href="#introduction">Introduction</a></li>
+          <li><a href="#usage_examples">Usage examples</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#download">Download</a></li>
+          <li><a href="#why_not_annotations_interceptors_or_other_magic">Why not
+              annotations, interceptors or other magic?</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div></div>
+  <footer class="bs-docs-footer" role="contentinfo">
+    <div class="container">
+      <div class="bs-docs-social">
+        <ul class="bs-docs-social-buttons">
+          <li class="follow-btn "><a href="https://twitter.com/EveritOrg"
+            class="twitter-follow-button" data-show-count="true">Follow @EveritOrg</a></li>
+          <li class="tweet-btn"><a href="https://twitter.com/share"
+            class="twitter-share-button" data-url="http://www.everit.org/">Tweet</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="http://www.everit.org/js/jquery-2.1.1.min.js"></script>
+  <script src="http://www.everit.org/js/bootstrap.min.js"></script>
+  <script src="http://www.everit.org/js/everit.js "></script>
+  <script type="text/javascript">
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+            : 'http://www')
+            + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <script src="http://www.everit.org/js/prettify/run_prettify.js"></script>
+</body>
+
+</html>
